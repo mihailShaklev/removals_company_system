@@ -1,0 +1,27 @@
+{% extends 'removals/layout.html' %}
+
+{% block body %}
+<!-- Login form -->
+<div class="period">
+    <h2>Login</h2>
+</div>
+<hr>
+<div class="login">
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group col-md-6">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group col-md-6">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="col-md-8">
+            <input class="btn" type="submit" value="Login">
+        </div>
+    </form>
+</div>
+{% endblock %}

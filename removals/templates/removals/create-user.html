@@ -1,0 +1,39 @@
+{% extends 'removals/layout.html' %}
+
+{% block body%}
+<div class="period"><h3>Create User</h3></div>
+<hr>
+{% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+{% endif %}
+<div class="main">
+            <form action="{% url 'create-user'%}" method="POST">
+                 {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputEmail">Email:</label>
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="password">Password:</label>
+                        <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="role">Role:</label>
+                        <select class="form-control" id="role" name="role">
+                            <option value="admin">admin</option>
+                            <option value="user">user</option>
+                            <option value="master">master</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Create</button>
+            </form>
+</div>
+{% endblock %}

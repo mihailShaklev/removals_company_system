@@ -1,0 +1,171 @@
+{% extends 'removals/layout.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="period"><h3>Jobs</h3></div>
+<hr>
+<div class="alert alert-danger" id="message">{{message}}</div>
+ <!-- Filter -->
+        <div class="filter-container">
+            <form class="form-inline" action="{% url 'report' %}" method="GET">
+                {% csrf_token %}
+                {% if startDate and endDate %}
+                <label id="datepicker1">From Date: </label>
+                <input type="date" name="date1" id="date1" class="form-control mb-2 mr-sm-2 mb-sm-0" id="datepicker1" value="{{startDate}}" required>
+                <label id="datepicker2">Till Date: </label>
+                <input type="date" name="date2" id="date2" class="form-control mb-2 mr-sm-2 mb-sm-0" id="datepicker2" value="{{endDate}}" required>
+                {% else %}
+                <label id="datepicker1">From Date: </label>
+                <input type="date" name="date1" id="date1" class="form-control mb-2 mr-sm-2 mb-sm-0" id="datepicker1" required>
+                <label id="datepicker2">Till Date: </label>
+                <input type="date" name="date2" id="date2" class="form-control mb-2 mr-sm-2 mb-sm-0" id="datepicker2" required>
+                {% endif %}
+                {% if user.role == 'master' or user.role == 'admin' %}
+                <label id="movers">Mover: </label>
+                <select class="form-control" name="movers" id="movers">
+                       <option value="all">all</option>
+                        {% if movers %}
+                        {% for mover in movers %}
+                        <option value="{{mover.mover}}">{{mover.mover}}</option>
+                        {% endfor %}
+                        {% endif %}
+                </select>
+                {% endif %}
+                <button type="submit" class="btn margin">Filter</button>
+            </form>
+            {% if mover %}
+            <input id="testM" value="{{mover}}" hidden>
+            {% endif %}
+        </div>
+        <div class="period"><strong>Report period: {{period}}</strong></div>
+        <div class="send_report_container">
+          <form class="form-inline">
+              <button class="btn send-mail-button" onclick="send_email()">Send table @</button>
+            <select class="form-control" name="user-email" id="user-email">
+                <option value="{{user.email}}">{{user.email}}</option>
+                {% if user.role == 'master' or user.role == 'admin' %}
+                {% for email in emails %}
+                <option value="{{email.email}}">{{email.email}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+          </form>
+        </div>
+        <div class="table-container" id="card">
+
+        <!-- Report table -->
+            {% if user.role == 'master' or user.role == 'admin' %}
+              {% if jobs %}
+
+            <!-- Master and Admin view -->
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Pickup</th>
+                        <th>Delivery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Cost(£)</th>
+                        <th>Profit(£)</th>
+                        <th>Details</th>
+                        <th>Mover</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {% for job in jobs %}
+                    <tr id="row{{job.id}}">
+                        <td data-label="Name">{{job.name}}</td>
+                        <td data-label="Phone">{{job.phone}}</td>
+                        <td data-label="Email"><a href="mailto:{{job.email}}">{{job.email}}</a></td>
+                        <td data-label="Pickup">{{job.pickup}}</td>
+                        <td data-label="Delivery">{{job.delivery}}</td>
+                        <td data-label="Date">{{job.date}}</td>
+                        <td data-label="Time">{{job.time}}</td>
+                        <td data-label="Cost">{{job.final_cost}}</td>
+                        <td data-label="Profit">{{job.commission}}</td>
+                        <td data-label="Details">{{job.comment}}</td>
+                        <td data-label="Mover">{{job.mover}}</td>
+                        <td data-label="Action">
+                            <a id="edit" href="{% url 'edit-job' job.id %}">Edit</a>
+                            <button id="delete" onclick="delete_job({{job.id}})">Delete</button>
+                            <a href="{% url 'edit-job' job.id %}" id="edit-button"><button id="edit-button{{job.id}}" class="btn edit-button">Edit</button></a>
+                            <button  onclick="delete_job({{job.id}})" id="delete-button{{job.id}}" class="btn delete-button">Delete</button>
+                        </td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+                  {% else %}
+                    <h3 class="no-jobs-found"><strong>No jobs found for {{period}}.</strong></h3>
+                  {% endif %}
+
+           {% elif user.role == 'user' %}
+               {% if jobs %}
+            <!-- User view -->
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Pickup</th>
+                        <th>Delivery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Details</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                     {% for job in jobs %}
+                    <tr>
+                        <td data-label="Name">{{job.name}}</td>
+                        <td data-label="Phone">{{job.phone}}</td>
+                        <td data-label="Pickup">{{job.pickup}}</td>
+                        <td data-label="Delivery">{{job.delivery}}</td>
+                        <td data-label="Date">{{job.date}}</td>
+                        <td data-label="Time">{{job.time}}</td>
+                        <td data-label="Details">{{job.comment}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                  {% else %}
+                    <h3 class="no-jobs-found"><strong>No jobs found for {{period}}.</strong></h3>
+                  {% endif %}
+                {% endif %}
+        </div>
+
+        <!-- Pagination -->
+          <div class="page-nav-container">
+               <nav aria-label="Page navigation example">
+                   <ul class="pagination justify-content-center">
+                   {% if jobs.has_previous %}
+                       <li class="page-item">
+                         <a class="page-link" href="?page={{jobs.previous_page_number}}&date1={{startDate}}&date2={{endDate}}" tabindex="-1">Previous</a>
+                       </li>
+                   {% else %}
+                       <li class="page-item disabled">
+                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                       </li>
+                   {% endif %}
+                   {% if jobs.has_next %}
+                       <li>
+                         <a class="page-link" href="?page={{jobs.next_page_number}}&date1={{startDate}}&date2={{endDate}}">Next</a>
+                       </li>
+                   {% else %}
+                       <li class="page-item disabled">
+                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                       </li>
+                 {% endif %}
+                 </ul>
+               </nav>
+            </div>
+{% else %}
+<div class="period"><h3>Hello!</h3></div>
+{% endif %}
+{% endblock %}

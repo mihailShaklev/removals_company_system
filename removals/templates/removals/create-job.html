@@ -1,0 +1,75 @@
+{% extends 'removals/layout.html' %}
+
+{% block body %}
+<div class="period"><h3>Create Job</h3></div>
+<hr>
+{% if message %}
+<div class="alert alert-success">{{message}}</div>
+{% endif %}
+<div class="main">
+            <form action="{% url 'create-job'%}" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="{{form.name.id_for_label}}">Name:</label>
+                        {{form.name}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{form.phone.id_for_label}}">Phone:</label>
+                        {{form.phone}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{form.email.id_for_label}}">Email:</label>
+                        {{form.email}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{form.date.id_for_label}}">Date:</label>
+                        {{form.date}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{form.time.id_for_label}}">Time:</label>
+                        {{form.time}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{form.cost.id_for_label}}">Cost:</label>
+                        {{form.cost}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="{{form.pickup.id_for_label}}">Pickup Address:</label>
+                        {{form.pickup}}
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{form.pickup_code.id_for_label}}">Post Code:</label>
+                        {{form.pickup_code}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="form.mover.id_for_label">Mover:</label>
+                        {{form.mover}}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="form.mover.id_for_label">Commission:</label>
+                        {{form.commission}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="{{form.delivery.id_for_label}}">Delivery Address:</label>
+                        {{form.delivery}}
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{form.delivery_code.id_for_label}}">Post Code:</label>
+                        {{form.delivery_code}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="{{form.details.id_for_label}}">Details:</label>
+                        {{form.details}}
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+</div>
+{% endblock %}

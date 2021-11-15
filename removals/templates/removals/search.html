@@ -1,0 +1,71 @@
+{% extends 'removals/layout.html' %}
+
+{% block body %}
+<div class="period"><h3>Search</h3></div>
+<hr>
+{% if user.role == 'master' or user.role == 'admin' %}
+<!-- Search form -->
+        <div class="filter-container">
+            <form class="form-inline" action="{% url 'search' %}" method="POST">
+                {% csrf_token %}
+                <label id="name">Client Name: </label>
+                <input type="text" name="name" placeholder="Client Name" class="form-control mb-2 mr-sm-2 mb-sm-0" id="name">
+                <label id="phone">Phone: </label>
+                <input type="text" name="phone" placeholder="Phone" class="form-control mb-2 mr-sm-2 mb-sm-0" id="phone">
+                <label id="email">Email: </label>
+                <input type="text" name="email" placeholder="Email" class="form-control mb-2 mr-sm-2 mb-sm-0" id="email">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+        {% if jobs %}
+        <div class="table-container" id="card">
+            <!-- Master and Admin view -->
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Pickup</th>
+                        <th>Delivery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Cost(£)</th>
+                        <th>Profit(£)</th>
+                        <th>Details</th>
+                        <th>Mover</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {% for job in jobs %}
+                    <tr id="row{{job.id}}">
+                        <td data-label="Name">{{job.name}}</td>
+                        <td data-label="Phone">{{job.phone}}</td>
+                        <td data-label="Email">{{job.email}}</td>
+                        <td data-label="Pickup">{{job.pickup}}</td>
+                        <td data-label="Delivery">{{job.delivery}}</td>
+                        <td data-label="Date">{{job.date}}</td>
+                        <td data-label="Time">{{job.time}}</td>
+                        <td data-label="Cost">{{job.final_cost}}</td>
+                        <td data-label="Profit">{{job.commission}}</td>
+                        <td data-label="Details">{{job.comment}}</td>
+                        <td data-label="Mover">{{job.mover}}</td>
+                        <td data-label="Action">
+                            <a id="edit" href="{% url 'edit-job' job.id %}">Edit</a>
+                            <button id="delete" onclick="delete_job({{job.id}})">Delete</button>
+                            <a href="{% url 'edit-job' job.id %}"><button id="edit-button{{job.id}}" class="btn edit-button">Edit</button></a>
+                            <button  onclick="delete_job({{job.id}})" id="delete-button{{job.id}}" class="btn delete-button">Delete</button>
+                        </td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+         {% else %}
+            <h3 class="no-jobs-found"><strong>No jobs found.</strong></h3>
+        {% endif %}
+    </div>
+{% else %}
+<h3 class="no-jobs-found"><strong>You are not authorized for this page.</strong></h3>
+{% endif %}
+{% endblock %}

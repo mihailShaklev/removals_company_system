@@ -1,0 +1,276 @@
+*{
+    box-sizing: border-box;
+}
+
+/* Style the body*/
+body {
+    font-family: Arial;
+    margin:0;
+}
+
+/* Header/logo Title/ */
+.header {
+    padding: 60px;
+    text-align: center;
+    background: #b3b3cb;
+    color: white;
+}
+
+/* Style the menu */
+.menu {
+    display: flex;
+    justify-content:flex-end;
+    background-color:#cccccc;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -9px;
+
+}
+
+/* Style the menu links*/
+.menu a {
+    color:white;
+    padding: 14px 20px;
+    text-decoration:none;
+    text-align: center;
+}
+
+/* Change color on hover */
+.menu a:hover {
+    background-color:#9595b7;
+    color:white;
+}
+
+/* Style title of page */
+.title {
+    padding:10px;
+    margin:10px;
+    border-bottom: 0.2px solid #f2f2f2;
+}
+
+/* Style the period title*/
+.period {
+    margin:20px;
+}
+
+/* Style filter container */
+.filter-container {
+    margin:20px 40px 20px;
+
+}
+
+/* Style table*/
+.table-container {
+    margin:40px;
+    border:0.2px solid gray;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* Style Main container*/
+.main {
+    margin:40px;
+    padding:20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* Style no jobs found title*/
+.no-jobs-found {
+    text-align:center;
+}
+/*Center Login Form*/
+.login {
+    max-width:400px;
+    margin:auto;
+}
+
+/* Style button*/
+.btn {
+    background-color:#b3b3cb;
+    color:white;
+    font-family: Arial;
+
+}
+
+/*Style button when hover on it*/
+.btn:hover {
+    border:0.5px solid gray;
+    background-color:#9595b7;
+    color:white;
+    font-family: Arial;
+}
+
+/* Style save button*/
+.save-button {
+    display:none;
+}
+
+/*Style edit button in table*/
+.edit-button {
+    float:right;
+}
+
+/*Style delete button in table*/
+.delete-button {
+    float:right;
+    margin-top:10px;
+    background-color:#ff8080;
+}
+
+/*Style delete button on hover*/
+.delete-button:hover {
+    background-color:#ff4d4d;
+}
+
+/*Style the link in the btn class*/
+.btn a {
+    text-decoration:none;
+    color:white;
+}
+
+i {
+    margin-right:5px;
+}
+
+.buttons-container {
+    margin:30px;
+}
+
+.send_report_container {
+    padding:15px;
+}
+
+.warning {
+    display:none;
+    color:red;
+}
+
+.margin {
+    margin-left:10px;
+}
+
+.send-mail-button {
+    margin-right:10px;
+}
+
+/* style the buttons and links */
+
+#edit {
+    display:none;
+}
+
+#delete {
+    display:none;
+}
+
+#editSuccess {
+    display:none;
+}
+
+#editProfile {
+    display:none;
+}
+
+#checkPass {
+    display:none;
+}
+
+#checkConfPass {
+    display:none;
+}
+
+#message {
+    display:none;
+}
+
+/* Styling Footer */
+.footer {
+    width:100%;
+    padding: 20px;
+    bottom:0;
+    text-align: center;
+    background: #ddd;
+}
+
+
+/* Styling tables for smaller devices*/
+/* Code with minor changes on my part taken from https://www.cognizantsoftvision.com/blog/making-tables-responsive-for-mobile-devices/*/
+
+@media screen and (max-width:600px) {
+
+/* Make tables responsive for smaller screens*/
+    #card table {
+        border:0;
+    }
+
+    #card table thead {
+        display:none;
+    }
+
+    #card table tr {
+        margin-bottom:20px;
+        display:block;
+        border-bottom:2px solid #ddd;
+        box-shadow:2px 2px 1px #dadada;
+    }
+
+    #card table td {
+        display:block;
+        text-align:right;
+        font-size:13px;
+    }
+
+    #card table td:last-child {
+        border-bottom:0;
+    }
+
+    #card table td::before {
+        content:attr(data-label);
+        float:left;
+        text-transform:uppercase;
+        font-weight:bold;
+    }
+
+     tbody{
+        line-height:100% !important;
+    }
+
+    #edit-button {
+        display:none;
+    }
+
+    .edit-button {
+        display:none;
+    }
+
+    .delete-button {
+        display:none;
+    }
+
+    #edit {
+        display:inline;
+   }
+
+   #delete {
+        display:inline;
+        color:red;
+        border:none;
+        background:none;
+   }
+
+   .table-container {
+    margin:auto;
+    border:none;
+   }
+
+   .margin {
+    margin-top:10px;
+   }
+
+   .send-mail-button {
+    margin-bottom:10px;
+   }
+
+/* Make the menu vertical on small screens */
+   .menu {
+       flex-direction:column;
+   }
+
+}
