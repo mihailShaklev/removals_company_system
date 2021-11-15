@@ -7,7 +7,7 @@ See how it works in the **video**:\
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/2KKx6ePu0_s/0.jpg)](https://youtube.com/watch?v=2KKx6ePu0_s&feature=share "Video Title")
 \
 \
-\
+## For Project`s details see below 👇 👇 👇
 \
 # Project Description
 The project is a web site for a removal company to keep track of its removal jobs. The site has three types of user roles: master, administrator and user. According to the role of the users they are authorized to access different features.
